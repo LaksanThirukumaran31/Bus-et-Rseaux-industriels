@@ -16,7 +16,7 @@ Le TP est divisé en 5 parties:<br>
 
 # BUS I2C 
 L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
-AJOUTER UNE IMAGE DE LA COM 
+![BMP290-STM32](Images/BMP280.png)
 
 # BMP280
 Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
