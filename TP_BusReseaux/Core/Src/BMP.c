@@ -9,6 +9,7 @@
 
 #include "BMP.h"
 
+
 /*
  * Variable pour la partie config et devID
  */

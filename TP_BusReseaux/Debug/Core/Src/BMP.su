@@ -1,6 +1,6 @@
-../Core/Src/BMP.c:64:6:devID_BMP	16	static
-../Core/Src/BMP.c:73:6:setConfig_BMP	24	static
-../Core/Src/BMP.c:83:10:temperatureNonCompense	24	static
-../Core/Src/BMP.c:104:10:pressionNonCompense	24	static
-../Core/Src/BMP.c:127:14:bmp280_compensate_T_int32	32	static
-../Core/Src/BMP.c:138:14:bmp280_compensate_P_int32	32	static
+../Core/Src/BMP.c:65:6:devID_BMP	16	static
+../Core/Src/BMP.c:74:6:setConfig_BMP	24	static
+../Core/Src/BMP.c:84:10:temperatureNonCompense	24	static
+../Core/Src/BMP.c:105:10:pressionNonCompense	24	static
+../Core/Src/BMP.c:128:14:bmp280_compensate_T_int32	32	static
+../Core/Src/BMP.c:139:14:bmp280_compensate_P_int32	32	static

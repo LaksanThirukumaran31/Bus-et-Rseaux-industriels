@@ -49,10 +49,12 @@
 
 /* USER CODE BEGIN PV */
 uint8_t rxPiBuffer[10];
-uint32_t nonecompesatedPression;
-uint32_t noneCompesatedTemperature;
+uint32_t nonecompensatedPression;
+uint32_t noneCompensatedTemperature;
 BMP280_S32_t compensatedTemperature;
 BMP280_U32_t compensatedPression;
+int K=1000;
+int A=1234;
 
 /* USER CODE END PV */
 
@@ -70,15 +72,28 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		printf("%s",rxPiBuffer);
 		if (strcmp(rxPiBuffer, "GET_T") == 0) {
-			temperatureNonCompense();
-			printf("Temperature affichage 'ok'\r\n");
+			noneCompensatedTemperature=temperatureNonCompense();
+			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature)
+			  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
 		}
 		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
-			pressionNonCompense();
-			printf("Pression affichage 'ok'\r\n");
+
+			nonecompensatedPression = pressionNonCompense();
+			compensatedPression=bmp280_compensate_T_int32(nonecompensatedPression);
+			  printf("La valeur de la pression compense = %d C\n\r",(int)(compensatedPression));
 		}
+		else if (strcmp(rxPiBuffer, "GET_K") == 0) {
+			printf("K=%d.%d000\r\n",(int)(K/100),K%100);
+				}
+		else if (strcmp(rxPiBuffer, "GET_A") == 0) {
+			printf("A=%d.%d000\r\n",(int)(A/1000),A%1000);
+
+				}
+		else if (strcmp(rxPiBuffer, "SET_K") == 0) {
+
+				}
 		else {
-			printf("Command no exist\r\n");
+			printf("Command no exist \r\n");
 
 		}
 	}
@@ -122,8 +137,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   devID_BMP();
   setConfig_BMP();
-  noneCompesatedTemperature=temperatureNonCompense();
-  nonecompesatedPression=pressionNonCompense();
+  noneCompensatedTemperature=temperatureNonCompense();
+  nonecompensatedPression=pressionNonCompense();
   compensatedTemperature= bmp280_compensate_T_int32(noneCompesatedTemperature);
   compensatedPression = bmp280_compensate_P_int32(nonecompesatedPression);
   printf("La valeur de la pression compense = %d hPa\n\r",(int)(compensatedPression));
