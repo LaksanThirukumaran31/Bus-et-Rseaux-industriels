@@ -12,6 +12,7 @@ Le TP est divisé en 5 parties:<br>
 **2.Interfaçage STM32 <-> Raspberry Pi**<br>
 **3.Interface Web sur Raspberry Pi**<br>
 **4.Interface API Rest & pilotage d'actionneur par bus CAN**<br>
+**5.Intégration I²C - Serial - REST - CAN** <br>
 
 # BUS I2C 
 L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
