@@ -8,25 +8,25 @@ Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mett
 
 
 Le TP est divisé en 5 parties:<br>
-**1.Interrogation des capteurs par le bus I²2C**<br>
+**1.Interrogation des capteurs par le bus I2C**<br>
 **2.Interfaçage STM32 <-> Raspberry Pi**<br>
 **3.Interface Web sur Raspberry Pi**<br>
 **4.Interface API Rest & pilotage d'actionneur par bus CAN**<br>
 **5.Intégration I²C - Serial - REST - CAN** <br>
 
 # 1.  BUS I2C 
-L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
+L'objectif de cette partie est d'interfacer une carte STM32 avec des capteurs I2C : <br>
 ![BMP290-STM32](Images/BMP280.png)
 
 # BMP280
-Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
+Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres, par exemple : pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
 Voici les différents registres : <br>
 
 ![BMP290-Registres](Images/Registres.png)
--> Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
+Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
 **En écriture : (0x77<<1)** <br>
 **En lecture :  (0x77<<1) | 0x01** <br>
--> Le registre qui permet d'identifier le composant est le **0xD0** et la valeur est **0x58**. Pour tester l'identification du composant, nous utilisons la fonction**```c devID_BMP()```**. Nous utilisons les fonctions ```c HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
+Le registre qui permet d'identifier le composant est le **0xD0** et la valeur est **0x58**. Pour tester l'identification du composant, nous utilisons la fonction**```c devID_BMP()```**. Nous utilisons les fonctions ```c HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
 
 ```c
 void devID_BMP(void)
@@ -107,7 +107,7 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 Dans cette partie, nous voulons réaliser un protocole de communication entre la raspberry et la stm32 : 
 ![BMP290-Registres](Images/Protocole.png)
 
-Nous utilison l'usart3 pour la communication entre la raspberry et la stm32. Sur la partie STM32, nous comparons le charactère reçu par l'uart3  au différents protocoles. Pour cela nous activons l'interruption pour l'uart3 et nous utilisons un callback pour comparer le caractère reçu : 
+Nous utilison l'usart3 pour la communication entre la raspberry et la STM32. Sur la partie STM32, nous comparons le caractère reçu par l'usart3  au différents protocoles. Pour cela nous activons l'interruption pour l'uart3 et nous utilisons un callback pour comparer le caractère reçu : 
 ```c
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
