@@ -17,14 +17,14 @@ AJOUTER UNE IMAGE DE LA COM
 
 # BMP280
 Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
-Voici les différents registres : 
+Voici les différents registres : <br>
 
 AJT IMAGE REGISTRE 
 -> Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
-En écriture : (0x77<<1)
-En lecture :  (0x77<<1) | 0x01
+En écriture : (0x77<<1) <br>
+En lecture :  (0x77<<1) | 0x01 <br>
 -> Le registre qui permet d'identifier le composant est le 0xD0 et la valeur est 0x58. Pour tester l'identification du composant, nous utilisons la fonction ```c devID_BMP()```. Nous utilisons les fonctions ```c
-HAL_I2C_Master_Transmit(```) et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. 
+HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
 
 ```c
 void devID_BMP(void)
@@ -45,10 +45,10 @@ void setConfig_BMP(void)
   /* La varibales SendBack contient la valeur du registre d'indentification 0xD0 */
 
 }
-```
+```<br>
  fonctions permettant le calcul de la température et de la pression compensées, en format entier 32 bits.les
 
--> Pour modifier le fonctionnement du composant, il faut modifier le registre 0xF4. Les registres pour lire la température sont : 0xFA à 0xFC et 0xF7 à 0xF9 pour lire la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```c temperatureNonCompense() et pressionNonCompense() ``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. 
+-> Pour modifier le fonctionnement du composant, il faut modifier le registre 0xF4. Les registres pour lire la température sont : 0xFA à 0xFC et 0xF7 à 0xF9 pour lire la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```c temperatureNonCompense() et pressionNonCompense() ``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
 ```c
 uint32_t temperatureNonCompense(void){
 	HAL_I2C_Master_Transmit(&hi2c1, BMPAddress << 1,&TMsbAdress, 1, HAL_MAX_DELAY);
