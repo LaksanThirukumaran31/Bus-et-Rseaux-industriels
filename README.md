@@ -1,29 +1,32 @@
 # Bus_Reseaux-industriels
 
-# Presentation 
+# Présentation 
 
-Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants : <br>
-AJOUTER IMAGE TP ENSEMBLE
+Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants: <br>
+
+![Presentation](Images/PresTP.png)
+
 
 Le TP est divisé en 5 parties:<br>
-**1.Interrogation des capteurs par le bus I²2C**<br>
+**1.Interrogation des capteurs par le bus I2C**<br>
 **2.Interfaçage STM32 <-> Raspberry Pi**<br>
 **3.Interface Web sur Raspberry Pi**<br>
 **4.Interface API Rest & pilotage d'actionneur par bus CAN**<br>
+**5.Intégration I²C - Serial - REST - CAN** <br>
 
-# BUS I2C 
-L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
-AJOUTER UNE IMAGE DE LA COM 
+# 1.  BUS I2C 
+L'objectif de cette partie est d'interfacer une carte STM32 avec des capteurs I2C : <br>
+![BMP290-STM32](Images/BMP280.png)
 
 # BMP280
-Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
+Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres, par exemple : pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
 Voici les différents registres : <br>
 
-AJT IMAGE REGISTRE 
--> Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
+![BMP290-Registres](Images/Registres.png)
+Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
 **En écriture : (0x77<<1)** <br>
 **En lecture :  (0x77<<1) | 0x01** <br>
--> Le registre qui permet d'identifier le composant est le **0xD0** et la valeur est **0x58**. Pour tester l'identification du composant, nous utilisons la fonction**```c devID_BMP()```**. Nous utilisons les fonctions ```c HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
+Le registre qui permet d'identifier le composant est le **0xD0** et la valeur est **0x58**. Pour tester l'identification du composant, nous utilisons la fonction**```c devID_BMP()```**. Nous utilisons les fonctions ```c HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
 
 ```c
 void devID_BMP(void)
@@ -97,3 +100,60 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 
 **Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations nous avons des valuers qui ne sont pas cohérentes. (Toutes les fonctions et les variables utilisés sont sur le fichier "BMP.c"** <br>
 
+# 2. Interfaçage STM32 - Raspberry
+# Préparation du Raspberry
+
+# Communication avec la STM32
+Dans cette partie, nous voulons réaliser un protocole de communication entre la raspberry et la stm32 : 
+![BMP290-Registres](Images/Protocole.png)
+
+Nous utilison l'usart3 pour la communication entre la raspberry et la STM32. Sur la partie STM32, nous comparons le caractère reçu par l'usart3  au différents protocoles. Pour cela nous activons l'interruption pour l'uart3 et nous utilisons un callback pour comparer le caractère reçu : 
+```c
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if (huart == &huart3)
+	{
+		printf("%s",rxPiBuffer);
+		if (strcmp(rxPiBuffer, "GET_T") == 0) {
+			noneCompensatedTemperature=temperatureNonCompense();
+			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature)
+			  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+		}
+		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
+
+			nonecompensatedPression = pressionNonCompense();
+			compensatedPression=bmp280_compensate_T_int32(nonecompensatedPression);
+			  printf("La valeur de la pression compense = %d C\n\r",(int)(compensatedPression));
+		}
+		else if (strcmp(rxPiBuffer, "GET_K") == 0) {
+			printf("K=%d.%d000\r\n",(int)(K/100),K%100);
+				}
+		else if (strcmp(rxPiBuffer, "GET_A") == 0) {
+			printf("A=%d.%d000\r\n",(int)(A/1000),A%1000);
+
+				}
+		else if (strcmp(rxPiBuffer, "SET_K") == 0) {
+
+				}
+		else {
+			printf("Command no exist \r\n");
+
+		}
+	}
+	HAL_UART_Receive_IT(&huart3, rxPiBuffer, 1);
+}
+```
+
+# 3. Interface REST
+
+
+
+
+
+
+# 4. Bus CAN 
+Nous n'avons pas pu traiter la partie CAN. <br>
+
+# Auteurs : 
+**Clément DU** <br>
+**Laksan THIRUKUMARAN**
