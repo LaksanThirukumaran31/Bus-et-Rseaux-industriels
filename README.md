@@ -2,9 +2,9 @@
 
 # Presentation 
 
-Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants : <br>
+Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants: <br>
 
-![Texte alternatif](Images/PresTP.jpg)
+![Presentation](Images/PresTP.png)
 
 
 Le TP est divisé en 5 parties:<br>
