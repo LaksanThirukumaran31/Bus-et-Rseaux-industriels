@@ -6,10 +6,10 @@ Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mett
 AJOUTER IMAGE TP ENSEMBLE
 
 Le TP est divisé en 5 parties:<br>
-1.Interrogation des capteurs par le bus I²2C<br>
-2.Interfaçage STM32 <-> Raspberry Pi<br>
-3.Interface Web sur Raspberry Pi<br>
-4.Interface API Rest & pilotage d'actionneur par bus CAN<br>
+**1.Interrogation des capteurs par le bus I²2C**<br>
+**2.Interfaçage STM32 <-> Raspberry Pi**<br>
+**3.Interface Web sur Raspberry Pi**<br>
+**4.Interface API Rest & pilotage d'actionneur par bus CAN**<br>
 
 # BUS I2C 
 L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
@@ -21,10 +21,9 @@ Voici les différents registres : <br>
 
 AJT IMAGE REGISTRE 
 -> Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
-En écriture : (0x77<<1) <br>
-En lecture :  (0x77<<1) | 0x01 <br>
--> Le registre qui permet d'identifier le composant est le 0xD0 et la valeur est 0x58. Pour tester l'identification du composant, nous utilisons la fonction ```c devID_BMP()```. Nous utilisons les fonctions ```c
-HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
+**En écriture : (0x77<<1)** <br>
+**En lecture :  (0x77<<1) | 0x01** <br>
+-> Le registre qui permet d'identifier le composant est le **0xD0** et la valeur est **0x58**. Pour tester l'identification du composant, nous utilisons la fonction**```c devID_BMP()```**. Nous utilisons les fonctions ```c HAL_I2C_Master_Transmit()``` et ```c HAL_I2C_Master_Transmit() ``` pour lire un régistre et récupérer la valeur. <br>
 
 ```c
 void devID_BMP(void)
@@ -47,9 +46,7 @@ void setConfig_BMP(void)
 }
 ```
 
- fonctions permettant le calcul de la température et de la pression compensées, en format entier 32 bits.les
-
--> Pour modifier le fonctionnement du composant, il faut modifier le registre 0xF4. Les registres pour lire la température sont : 0xFA à 0xFC et 0xF7 à 0xF9 pour lire la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```c temperatureNonCompense() et pressionNonCompense() ``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
+Pour modifier le fonctionnement du composant, il faut modifier le registre **0xF4**. Les registres pour lire la température sont : 0xFA à 0xFC et 0xF7 à 0xF9 pour lire la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```c temperatureNonCompense() et pressionNonCompense() ``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
 ```c
 uint32_t temperatureNonCompense(void){
 	HAL_I2C_Master_Transmit(&hi2c1, BMPAddress << 1,&TMsbAdress, 1, HAL_MAX_DELAY);
@@ -96,3 +93,7 @@ uint32_t pressionNonCompense(void){
 }
 /* On récupère les valeurs (MSB, LSB, xLSB) puis on fais un décallage pour récupérer la valeur sur 5 octets */
 ```
+Nous avons utilisé les fonctions de compensation indiquées dans la datasheet du composant. Ses fonctions permettent d'avoir un entier sur 32 bits. Nous avons d'abors récuperer les dig_Tx et digPx car nous en avons besoins pour appliquer les fonctions de compensation. (**```c bmp280_compensate_T_int32() bmp280_compensate_P_int32() ```**) <br>
+
+**Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations nous avons des valuers qui ne sont pas cohérentes. (Toutes les fonctions et les variables utilisés sont sur le fichier "BMP.c"** <br>
+
