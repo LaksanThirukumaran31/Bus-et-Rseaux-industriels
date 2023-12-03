@@ -104,10 +104,45 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 # Préparation du Raspberry
 
 # Communication avec la STM32
+Dans cette partie, nous voulons réaliser un protocole de communication entre la raspberry et la stm32 : 
 
 
+Nous utilison l'usart3 pour la communication entre la raspberry et la stm32. Sur la partie STM32, nous comparons le charactère reçu par l'uart3  au différents protocoles. Pour cela nous activons l'interruption pour l'uart3 et nous utilisons un callback pour comparer le caractère reçu : 
+```c
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if (huart == &huart3)
+	{
+		printf("%s",rxPiBuffer);
+		if (strcmp(rxPiBuffer, "GET_T") == 0) {
+			noneCompensatedTemperature=temperatureNonCompense();
+			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature)
+			  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+		}
+		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
 
+			nonecompensatedPression = pressionNonCompense();
+			compensatedPression=bmp280_compensate_T_int32(nonecompensatedPression);
+			  printf("La valeur de la pression compense = %d C\n\r",(int)(compensatedPression));
+		}
+		else if (strcmp(rxPiBuffer, "GET_K") == 0) {
+			printf("K=%d.%d000\r\n",(int)(K/100),K%100);
+				}
+		else if (strcmp(rxPiBuffer, "GET_A") == 0) {
+			printf("A=%d.%d000\r\n",(int)(A/1000),A%1000);
 
+				}
+		else if (strcmp(rxPiBuffer, "SET_K") == 0) {
+
+				}
+		else {
+			printf("Command no exist \r\n");
+
+		}
+	}
+	HAL_UART_Receive_IT(&huart3, rxPiBuffer, 1);
+}
+```
 
 # 3. Interface REST
 
