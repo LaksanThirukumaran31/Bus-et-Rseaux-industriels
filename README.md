@@ -3,7 +3,7 @@
 # Presentation 
 
 Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants : 
-![Objectifs](Images/PresentationTP.png)
+![Objectifs](Bureau/PresentationTP.png)
 
 
 
