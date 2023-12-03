@@ -22,7 +22,7 @@ L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteur
 Premièrement, nous voulons réaliser la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I2C comme protocole de communication. Nous pouvons modifier ou lire les valeurs de certains registres pour avoir l'ID du capteur, configurer le capteur ou récupérer des valeurs. <br> 
 Voici les différents registres : <br>
 
-AJT IMAGE REGISTRE 
+![BMP290-Registres](Images/Registres.png)
 -> Les adresses I2C possibles pour réaliser une communication avec le capteur sont:<br>
 **En écriture : (0x77<<1)** <br>
 **En lecture :  (0x77<<1) | 0x01** <br>
