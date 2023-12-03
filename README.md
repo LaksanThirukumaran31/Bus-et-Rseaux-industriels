@@ -1,6 +1,6 @@
 # Bus_Reseaux-industriels
 
-# Presentation 
+# Présentation 
 
 Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants: <br>
 
@@ -14,7 +14,7 @@ Le TP est divisé en 5 parties:<br>
 **4.Interface API Rest & pilotage d'actionneur par bus CAN**<br>
 **5.Intégration I²C - Serial - REST - CAN** <br>
 
-# BUS I2C 
+# 1.  BUS I2C 
 L'objectif de cette partie est d'un interfacer une carte STM32 avec deux capteurs I2C : <br>
 ![BMP290-STM32](Images/BMP280.png)
 
@@ -100,3 +100,23 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 
 **Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations nous avons des valuers qui ne sont pas cohérentes. (Toutes les fonctions et les variables utilisés sont sur le fichier "BMP.c"** <br>
 
+# 2. Interfaçage STM32 - Raspberry
+
+
+
+
+
+
+# 3. Interface REST
+
+
+
+
+
+
+# 4. Bus CAN 
+Nous n'avons pas pu traiter la partie CAN. <br>
+
+# Auteurs : 
+**Clément DU** <br>
+**Laksan THIRUKUMARAN**
