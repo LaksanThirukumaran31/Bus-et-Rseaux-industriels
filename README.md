@@ -45,7 +45,8 @@ void setConfig_BMP(void)
   /* La varibales SendBack contient la valeur du registre d'indentification 0xD0 */
 
 }
-```<br>
+```
+
  fonctions permettant le calcul de la température et de la pression compensées, en format entier 32 bits.les
 
 -> Pour modifier le fonctionnement du composant, il faut modifier le registre 0xF4. Les registres pour lire la température sont : 0xFA à 0xFC et 0xF7 à 0xF9 pour lire la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```c temperatureNonCompense() et pressionNonCompense() ``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
