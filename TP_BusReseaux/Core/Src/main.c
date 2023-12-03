@@ -64,6 +64,26 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if (huart == &huart3)
+	{
+		printf("%s",rxPiBuffer);
+		if (strcmp(rxPiBuffer, "GET_T") == 0) {
+			temperatureNonCompense();
+			printf("Temperature affichage 'ok'\r\n");
+		}
+		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
+			pressionNonCompense();
+			printf("Pression affichage 'ok'\r\n");
+		}
+		else {
+			printf("Command no exist\r\n");
+
+		}
+	}
+	HAL_UART_Receive_IT(&huart3, rxPiBuffer, 1);
+}
 
 /* USER CODE END 0 */
 
@@ -106,8 +126,8 @@ int main(void)
   nonecompesatedPression=pressionNonCompense();
   compensatedTemperature= bmp280_compensate_T_int32(noneCompesatedTemperature);
   compensatedPression = bmp280_compensate_P_int32(nonecompesatedPression);
-  printf("La valeur de la pression compense = %d hPa\n\r",(int)(compensatedPression/100));
-  printf("La valeur de la temperature compensé = %d C\n\r",(int)(compensatedTemperature/100));
+  printf("La valeur de la pression compense = %d hPa\n\r",(int)(compensatedPression));
+  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
 
   /* USER CODE END 2 */
 
