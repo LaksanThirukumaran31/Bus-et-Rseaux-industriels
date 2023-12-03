@@ -3,7 +3,9 @@
 # Presentation 
 
 Le TP consiste à utiliser plusieurs bus et réseaux de communication et de mettre en place tous ces composants : <br>
-AJOUTER IMAGE TP ENSEMBLE
+
+![Texte alternatif](Images/PresTP.jpg)
+
 
 Le TP est divisé en 5 parties:<br>
 **1.Interrogation des capteurs par le bus I²2C**<br>
