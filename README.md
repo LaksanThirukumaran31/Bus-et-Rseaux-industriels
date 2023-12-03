@@ -105,7 +105,7 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 
 # Communication avec la STM32
 Dans cette partie, nous voulons réaliser un protocole de communication entre la raspberry et la stm32 : 
-
+![BMP290-Registres](Images/Protocole.png)
 
 Nous utilison l'usart3 pour la communication entre la raspberry et la stm32. Sur la partie STM32, nous comparons le charactère reçu par l'uart3  au différents protocoles. Pour cela nous activons l'interruption pour l'uart3 et nous utilisons un callback pour comparer le caractère reçu : 
 ```c
