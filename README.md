@@ -101,7 +101,9 @@ Nous avons utilisé les fonctions de compensation indiquées dans la datasheet d
 **Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations nous avons des valuers qui ne sont pas cohérentes. (Toutes les fonctions et les variables utilisés sont sur le fichier "BMP.c"** <br>
 
 # 2. Interfaçage STM32 - Raspberry
+# Préparation du Raspberry
 
+# Communication avec la STM32
 
 
 
