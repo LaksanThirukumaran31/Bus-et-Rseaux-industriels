@@ -17,12 +17,15 @@
 
 #define BMPAddress  	0x77
 
-
+typedef uint32_t BMP280_U32_t;
+typedef int32_t BMP280_S32_t;
 void devID_BMP(void);
 void setConfig_BMP(void);
 uint32_t temperatureNonCompense(void);
 uint32_t pressionNonCompense(void);
 
+BMP280_S32_t bmp280_compensate_T_int32(BMP280_S32_t adc_T);
+BMP280_U32_t bmp280_compensate_P_int32(BMP280_S32_t adc_P);
 typedef uint32_t BMP280_U32_t;
 typedef int32_t BMP280_S32_t;
 
