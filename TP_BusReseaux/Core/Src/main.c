@@ -142,8 +142,8 @@ int main(void)
   nonecompensatedPression=pressionNonCompense();
   compensatedTemperature= bmp280_compensate_T_int32(noneCompensatedTemperature);
   compensatedPression = bmp280_compensate_P_int32(nonecompensatedPression);
-  printf("La valeur de la pression compense = %d hPa\n\r",(int)(compensatedPression));
-  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+  printf("Pcompense=%dPa\n\r",(int)(compensatedPression));
+  printf("Tcompense=%d_C\n\r",(int)(compensatedTemperature));
 
   /* USER CODE END 2 */
 

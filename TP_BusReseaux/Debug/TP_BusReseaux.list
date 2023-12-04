@@ -7,23 +7,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         000057c8  080001d0  080001d0  000101d0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       000001c4  08005998  08005998  00015998  2**2
+  2 .rodata       00000164  08005998  08005998  00015998  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08005b5c  08005b5c  00020094  2**0
+  3 .ARM.extab    00000000  08005afc  08005afc  00020094  2**0
                   CONTENTS
-  4 .ARM          00000008  08005b5c  08005b5c  00015b5c  2**2
+  4 .ARM          00000008  08005afc  08005afc  00015afc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08005b64  08005b64  00020094  2**0
+  5 .preinit_array 00000000  08005b04  08005b04  00020094  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08005b64  08005b64  00015b64  2**2
+  6 .init_array   00000004  08005b04  08005b04  00015b04  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08005b68  08005b68  00015b68  2**2
+  7 .fini_array   00000004  08005b08  08005b08  00015b08  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000094  20000000  08005b6c  00020000  2**2
+  8 .data         00000094  20000000  08005b0c  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          000002d4  20000094  08005c00  00020094  2**2
+  9 .bss          000002d4  20000094  08005ba0  00020094  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000368  08005c00  00020368  2**0
+ 10 ._user_heap_stack 00000600  20000368  08005ba0  00020368  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020094  2**0
                   CONTENTS, READONLY
@@ -1461,13 +1461,13 @@ int main(void)
  8000eee:	4603      	mov	r3, r0
  8000ef0:	4a0a      	ldr	r2, [pc, #40]	; (8000f1c <main+0x84>)
  8000ef2:	6013      	str	r3, [r2, #0]
-  printf("La valeur de la pression compense = %d hPa\n\r",(int)(compensatedPression));
+  printf("Pcompense=%dPa\n\r",(int)(compensatedPression));
  8000ef4:	4b09      	ldr	r3, [pc, #36]	; (8000f1c <main+0x84>)
  8000ef6:	681b      	ldr	r3, [r3, #0]
  8000ef8:	4619      	mov	r1, r3
  8000efa:	4809      	ldr	r0, [pc, #36]	; (8000f20 <main+0x88>)
  8000efc:	f003 fe36 	bl	8004b6c <iprintf>
-  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+  printf("Tcompense=%d_C\n\r",(int)(compensatedTemperature));
  8000f00:	4b05      	ldr	r3, [pc, #20]	; (8000f18 <main+0x80>)
  8000f02:	681b      	ldr	r3, [r3, #0]
  8000f04:	4619      	mov	r1, r3
@@ -1485,8 +1485,8 @@ int main(void)
  8000f14:	2000017c 	.word	0x2000017c
  8000f18:	20000184 	.word	0x20000184
  8000f1c:	20000188 	.word	0x20000188
- 8000f20:	08005ab0 	.word	0x08005ab0
- 8000f24:	08005ae0 	.word	0x08005ae0
+ 8000f20:	08005a50 	.word	0x08005a50
+ 8000f24:	08005a34 	.word	0x08005a34
 
 08000f28 <SystemClock_Config>:
 /**
@@ -2207,7 +2207,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8001484:	20020000 	.word	0x20020000
  8001488:	20000000 	.word	0x20000000
  800148c:	20000094 	.word	0x20000094
- 8001490:	08005b6c 	.word	0x08005b6c
+ 8001490:	08005b0c 	.word	0x08005b0c
  8001494:	20000094 	.word	0x20000094
  8001498:	20000368 	.word	0x20000368
 
@@ -5275,7 +5275,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8002f02:	bf00      	nop
  8002f04:	40023c00 	.word	0x40023c00
  8002f08:	40023800 	.word	0x40023800
- 8002f0c:	08005b10 	.word	0x08005b10
+ 8002f0c:	08005ab0 	.word	0x08005ab0
  8002f10:	2000002c 	.word	0x2000002c
  8002f14:	20000030 	.word	0x20000030
 
@@ -5306,7 +5306,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8002f4c:	4618      	mov	r0, r3
  8002f4e:	bd80      	pop	{r7, pc}
  8002f50:	40023800 	.word	0x40023800
- 8002f54:	08005b20 	.word	0x08005b20
+ 8002f54:	08005ac0 	.word	0x08005ac0
 
 08002f58 <HAL_RCC_GetPCLK2Freq>:
  8002f58:	b580      	push	{r7, lr}
@@ -5323,7 +5323,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8002f74:	4618      	mov	r0, r3
  8002f76:	bd80      	pop	{r7, pc}
  8002f78:	40023800 	.word	0x40023800
- 8002f7c:	08005b20 	.word	0x08005b20
+ 8002f7c:	08005ac0 	.word	0x08005ac0
 
 08002f80 <HAL_RCC_GetSysClockFreq>:
  8002f80:	e92d 4fb0 	stmdb	sp!, {r4, r5, r7, r8, r9, sl, fp, lr}
@@ -8644,10 +8644,10 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8004ee2:	4798      	blx	r3
  8004ee4:	3601      	adds	r6, #1
  8004ee6:	e7f2      	b.n	8004ece <__libc_init_array+0x1e>
- 8004ee8:	08005b64 	.word	0x08005b64
- 8004eec:	08005b64 	.word	0x08005b64
- 8004ef0:	08005b64 	.word	0x08005b64
- 8004ef4:	08005b68 	.word	0x08005b68
+ 8004ee8:	08005b04 	.word	0x08005b04
+ 8004eec:	08005b04 	.word	0x08005b04
+ 8004ef0:	08005b04 	.word	0x08005b04
+ 8004ef4:	08005b08 	.word	0x08005b08
 
 08004ef8 <__retarget_lock_acquire_recursive>:
  8004ef8:	4770      	bx	lr
@@ -9144,11 +9144,11 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8005358:	4630      	mov	r0, r6
  800535a:	f000 f879 	bl	8005450 <_printf_i>
  800535e:	e7e4      	b.n	800532a <_vfiprintf_r+0x1ea>
- 8005360:	08005b28 	.word	0x08005b28
- 8005364:	08005b32 	.word	0x08005b32
+ 8005360:	08005ac8 	.word	0x08005ac8
+ 8005364:	08005ad2 	.word	0x08005ad2
  8005368:	00000000 	.word	0x00000000
  800536c:	0800511b 	.word	0x0800511b
- 8005370:	08005b2e 	.word	0x08005b2e
+ 8005370:	08005ace 	.word	0x08005ace
 
 08005374 <_printf_common>:
  8005374:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -9481,8 +9481,8 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  8005684:	f104 0619 	add.w	r6, r4, #25
  8005688:	e7f5      	b.n	8005676 <_printf_i+0x226>
  800568a:	bf00      	nop
- 800568c:	08005b39 	.word	0x08005b39
- 8005690:	08005b4a 	.word	0x08005b4a
+ 800568c:	08005ad9 	.word	0x08005ad9
+ 8005690:	08005aea 	.word	0x08005aea
 
 08005694 <__sflush_r>:
  8005694:	898a      	ldrh	r2, [r1, #12]
