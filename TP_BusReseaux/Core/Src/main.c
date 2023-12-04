@@ -28,6 +28,7 @@
 #include "BMP.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,13 +75,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if (strcmp(rxPiBuffer, "GET_T") == 0) {
 			noneCompensatedTemperature=temperatureNonCompense();
 			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature);
-			  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+			  printf("Tcompense=%d_C\n\r",(int)(compensatedTemperature));
 		}
 		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
 
 			nonecompensatedPression = pressionNonCompense();
 			compensatedPression=bmp280_compensate_T_int32(nonecompensatedPression);
-			  printf("La valeur de la pression compense = %d C\n\r",(int)(compensatedPression));
+			  printf("Pcompense=%dPa\n\r",(int)(compensatedPression));
 		}
 		else if (strcmp(rxPiBuffer, "GET_K") == 0) {
 			printf("K=%d.%d000\r\n",(int)(K/100),K%100);
