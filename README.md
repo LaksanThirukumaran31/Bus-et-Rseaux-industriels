@@ -56,8 +56,8 @@ void setConfig_BMP(void)
 
 Pour modifier le fonctionnement du composant, il faut modifier le registre ```0xF4```.<br>
 Les registres contenant la température sont : ```0xFA``` à ```0xFC``` et ```0xF7``` à ```0xF9``` pour ceux de la pression.<br>
-La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB).<br>
-Nous utilisons les fonctions ```temperatureNonCompense()``` et ```pressionNonCompense()``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
+La température et la pression sont répresentées sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB).<br>
+Nous utilisons les fonctions ```temperatureNonCompense()``` et ```pressionNonCompense()``` pour récupérer les valeurs des registres de température et de pression, puis nous affichons les valeurs non compensées de la pression et de la température. <br>
 ```c
 uint32_t temperatureNonCompense(void){
 	HAL_I2C_Master_Transmit(&hi2c1, BMPAddress << 1,&TMsbAdress, 1, HAL_MAX_DELAY);
@@ -113,12 +113,12 @@ Ces fonctions permettent d'avoir un entier sur 32 bits. Nous avons d'abord récu
 L'objectif est de permettre l'interrogation du STM32 via un Raspberry Pi Zero ```(RP0)``` Wifi
 ## Mise en route du RP0
 Nous "flashons" la carte SD à l'aider de rpi-imager.
-Nous nous configurons sur le réseau spécifique
+Nous configurons sur le réseau spécifique
 ```
 SSID : ESE_Bus_Network
 Password : ilovelinux
 ```
-Nous installons la carte SD dans notre RP0 puis nous nous y connectons par SSH à l'aide de l'adresse IP du RP0
+Nous installons la carte SD dans notre RP0 puis nous nous y connectons par SSH à l'aide de l'adresse IP du RP0 récupérée sur le réseau ```192:168:88:1```
 
 ## Communication avec la STM32
 Dans cette partie, nous voulons réaliser un protocole de communication entre la Raspberry et la STM32 : 
@@ -210,7 +210,7 @@ En reprenant la fonction ```api_welcome_index```, créons les CRUD suivants :
 ![PUT](Images/Screenshot_Postman/put.JPG)
 - Méthode DELETE
 - Path=welcome/15
-- Supprime la lettre à la position 15 pour obtenir ESE au lieu de 3ESE
+- Supprime la lettre à la position 18 pour obtenir ES au lieu de ESE
 ![DELETEX](Images/Screenshot_Postman/delete_x.JPG)
 - Méthode DELETE
 - Path=welcome
