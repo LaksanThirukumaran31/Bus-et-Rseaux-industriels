@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, abort
 
 app = Flask(__name__)
 
@@ -9,6 +9,8 @@ def api_get_welcome():
     return jsonify({'message': welcome}), 200
 @app.route('/api/welcome/<int:index>', methods=['GET'])
 def api_get_welcome_index(index):
+    if index < 0 or index >= len(welcome):
+        abort(404)
     return jsonify({'letter': welcome[index-1]}), 200
 
 @app.route('/api/welcome/', methods=['POST'])
