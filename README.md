@@ -184,23 +184,41 @@ Pour qu'il s'agisse d'une interface REST, nous serons amenés à utiliser JSON e
 En reprenant la fonction ```api_welcome_index```, créons les CRUD suivants : 
 ![CRUD](Images/Screenshot_Postman/crud.JPG)
 #### Tests des API sur la plateforme POSTMAN
-Méthode GET, path=welcome, renvoie la phrase
+- Méthode GET<br>
+- Path=welcome<br>
+- Renvoie la phrase
 ![GET](Images/Screenshot_Postman/get_general.JPG)
-Méthode GET, path=welcome/5, renvoie la lettre à la position de "Welc```o```me to 3ESE API!"
+- Méthode GET
+- Path=welcome/5
+- Renvoie la lettre à la position de "Welc*o*me to 3ESE API!"
 ![GETX](Images/Screenshot_Postman/get_x.JPG)
-Méthode POST, path=welcome, change la phrase en "Bienvenue aux 3ESE de la promo 2024!"
+- Méthode POST
+- Path=welcome
+- Change la phrase en "Bienvenue aux 3ESE de la promo 2024!"
 ![POST](Images/Screenshot_Postman/post.JPG)
-Méthode GET, path=welcome, vérifie qu'on a bien effectué le changement de phrase
+- Méthode GET
+- Path=welcome
+- Vérifie qu'on a bien effectué le changement de phrase
 ![GET2](Images/Screenshot_Postman/get_general2.JPG)
-Méthode PATCH, path=welcome/18, change la lettre à la position 18 pour obtenir 3ESC au lieu d'3ESE
+- Méthode PATCH
+- Path=welcome/18
+- Change la lettre à la position 18 pour obtenir 3ES**C** au lieu d'3ES**E**
 ![PATCH](Images/Screenshot_Postman/patch.JPG)
-Méthode PUT, path=welcome/15, insère le mot 3AEI à la place d'3ESC
+- Méthode PUT
+- Path=welcome/15,
+- Insère le mot 3**AEI** à la place d'3**ESC**
 ![PUT](Images/Screenshot_Postman/put.JPG)
-Méthode DELETE, path=welcome/15, supprime la lettre à la position 15 pour obtenir ESE au lieu de 3ESE
+- Méthode DELETE
+- Path=welcome/15
+- Supprime la lettre à la position 15 pour obtenir ESE au lieu de 3ESE
 ![DELETEX](Images/Screenshot_Postman/delete_x.JPG)
-Méthode DELETE, path=welcome, supprime la phrase entière
+- Méthode DELETE
+- Path=welcome
+- Supprime la phrase entière
 ![DELETE](Images/Screenshot_Postman/delete_all.JPG)
-Méthode GET, path=welcome, vérifie qu'on a bien un vide après suppression
+- Méthode GET
+- Path=welcome
+- Vérifie qu'on a bien un vide après suppression
 ![GET_D](Images/Screenshot_Postman/get_delete.JPG)
 ### Erreur 404
 Redirection sur la page 'erreur' si ```@app.route('/')``` ou si ```index < taille(welcome)```, placez-vous dans ```@app.route('/api/welcome/')```
