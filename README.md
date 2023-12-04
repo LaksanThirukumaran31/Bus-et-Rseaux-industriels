@@ -133,14 +133,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		printf("%s",rxPiBuffer);
 		if (strcmp(rxPiBuffer, "GET_T") == 0) {
 			noneCompensatedTemperature=temperatureNonCompense();
-			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature)
-			  printf("La valeur de la temperature compense = %d C\n\r",(int)(compensatedTemperature));
+			compensatedTemperature=bmp280_compensate_T_int32(noneCompensatedTemperature);
+			  printf("Tcompense=%d_C\n\r",(int)(compensatedTemperature));
 		}
 		else if (strcmp(rxPiBuffer, "GET_P") == 0) {
 
 			nonecompensatedPression = pressionNonCompense();
 			compensatedPression=bmp280_compensate_T_int32(nonecompensatedPression);
-			  printf("La valeur de la pression compense = %d C\n\r",(int)(compensatedPression));
+			  printf("Pcompense=%dPA\n\r",(int)(compensatedPression));
 		}
 		else if (strcmp(rxPiBuffer, "GET_K") == 0) {
 			printf("K=%d.%d000\r\n",(int)(K/100),K%100);
@@ -150,7 +150,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 				}
 		else if (strcmp(rxPiBuffer, "SET_K") == 0) {
-
+			K=atoi(rxPiBuffer+strlen("SET_K")+strlen("="));
 				}
 		else {
 			printf("Command no exist \r\n");
