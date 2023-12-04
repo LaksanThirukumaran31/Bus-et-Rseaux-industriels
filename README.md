@@ -19,17 +19,19 @@ L'objectif de cette partie est d'interfacer une carte STM32 avec des capteurs I�
 ![BMP290-STM32](Images/BMP280.png)
 
 ## BMP280
-Premièrement, nous réalisons la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh. Ce capteur utilise l'I²C comme protocole de communication. Nous prenons connaissance des principaux registres de ce capteur pour y récupérer adresse et valeur, par exemple, les adresses I²C possibles du capteur, l'identification du capteur, pour ensuite configurer le capteur afin de récupérer certaines valeurs. <br> 
+Premièrement, nous réalisons la mise en oeuvre du BMP280. Le BMP280 est un capteur de température et de pression développé par Bosh.<br>
+Ce capteur utilise l'I²C comme protocole de communication. Nous prenons connaissance des principaux registres de ce capteur pour y récupérer adresse et valeur, par exemple, les adresses I²C possibles du capteur, l'identification du capteur, pour ensuite configurer le capteur afin de récupérer certaines valeurs. <br> 
 Voici les différents registres : <br>
 
-![BMP290-Registres](Images/Registres.png)
+![BMP290-Registres](Images/Registres.JPG)
 
 ## Communication I²C
 Les adresses I²C possibles pour réaliser une communication avec le capteur sont :<br>
 En écriture : ```(0x77<<1)``` <br>
 En lecture :  ```(0x77<<1) | 0x01``` <br>
 Le registre qui permet d'identifier le composant est le ```0xD0``` et la valeur est ```0x58```. <br>
-Pour tester l'identification du composant, nous utilisons la fonction ```devID_BMP()```. Nous utilisons les fonctions ```HAL_I2C_Master_Transmit()``` et ```HAL_I2C_Master_Transmit() ``` pour lire un registre et récupérer sa valeur. <br>
+Pour tester l'identification du composant, nous utilisons la fonction ```devID_BMP()```.<br>
+Nous utilisons les fonctions ```HAL_I2C_Master_Transmit()``` et ```HAL_I2C_Master_Transmit() ``` pour lire un registre et récupérer sa valeur. <br>
 
 ```c
 void devID_BMP(void)
@@ -52,7 +54,10 @@ void setConfig_BMP(void)
 }
 ```
 
-Pour modifier le fonctionnement du composant, il faut modifier le registre ```0xF4```. Les registres contenant la température sont : ```0xFA``` à ```0xFC``` et ```0xF7``` à ```0xF9``` pour ceux de la pression. La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB). Nous utilisons les fonctions ```temperatureNonCompense()``` et ```pressionNonCompense()``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
+Pour modifier le fonctionnement du composant, il faut modifier le registre ```0xF4```.<br>
+Les registres contenant la température sont : ```0xFA``` à ```0xFC``` et ```0xF7``` à ```0xF9``` pour ceux de la pression.<br>
+La température et la pression sont répresentés sur 5 octets ( 8 bits MSB, 8 bits LSB, 4 bits xLSB).<br>
+Nous utilisons les fonctions ```temperatureNonCompense()``` et ```pressionNonCompense()``` pour récupérer les valeurs des registres de température et de pression puis, nous affichons les valeurs non compensés de la pression et de la température. <br>
 ```c
 uint32_t temperatureNonCompense(void){
 	HAL_I2C_Master_Transmit(&hi2c1, BMPAddress << 1,&TMsbAdress, 1, HAL_MAX_DELAY);
@@ -99,9 +104,10 @@ uint32_t pressionNonCompense(void){
 }
 /* Nous récupérons les valeurs (MSB, LSB, xLSB) puis nous effectuons un décallage pour récupérer la valeur sur 5 octets */
 ```
-Nous avons utilisé les fonctions de compensation indiquées dans la datasheet du composant. Ses fonctions permettent d'avoir un entier sur 32 bits. Nous avons d'abord récuperé les dig_Tx et digPx afin d'appliquer les fonctions de compensation. ```c bmp280_compensate_T_int32()``` et ```bmp280_compensate_P_int32()``` <br>
+Nous avons utilisé les fonctions de compensation indiquées dans la datasheet du composant.<br>
+Ces fonctions permettent d'avoir un entier sur 32 bits. Nous avons d'abord récuperé les dig_Tx et digPx afin d'appliquer les fonctions de compensation. ```c bmp280_compensate_T_int32()``` et ```bmp280_compensate_P_int32()``` <br>
 
-**Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations, nous avons des valuers qui ne sont pas cohérentes. Toutes les fonctions et les variables utilisés se trouvent le fichier "BMP.c"** <br>
+**Pour conclure, nous arrivons à récupérer les valeurs non compensées mais lorsque nous utilisons les fonctions de compensations, nous avons des valeurs qui ne sont pas cohérentes. Toutes les fonctions et les variables utilisées se trouvent le fichier "BMP.c"** <br>
 
 # 2. Interfaçage STM32 - Raspberry
 L'objectif est de permettre l'interrogation du STM32 via un Raspberry Pi Zero ```(RP0)``` Wifi
@@ -155,7 +161,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 ```
 ## Commande depuis Python
-Après avoir établi le protocole de communication entre minicom et la STM32, passons maintenantn sur python : ```BMP280.py```
+Après avoir établi le protocole de communication entre minicom et la STM32, passons sur python : ```BMP280.py```
 
 # 3. Interface REST
 L'objectif est le développement d'une interface REST sur le Raspberry
@@ -178,23 +184,28 @@ Pour qu'il s'agisse d'une interface REST, nous serons amenés à utiliser JSON e
 En reprenant la fonction ```api_welcome_index```, créons les CRUD suivants : 
 ![CRUD](Images/Screenshot_Postman/crud.JPG)
 #### Tests des API sur la plateforme POSTMAN
+Méthode GET, path=welcome, renvoie la phrase
 ![GET](Images/Screenshot_Postman/get_general.JPG)
+Méthode GET, path=welcome/5, renvoie la lettre à la position de "Welc```o```me to 3ESE API!"
 ![GETX](Images/Screenshot_Postman/get_x.JPG)
+Méthode POST, path=welcome, change la phrase en "Bienvenue aux 3ESE de la promo 2024!"
 ![POST](Images/Screenshot_Postman/post.JPG)
+Méthode GET, path=welcome, vérifie qu'on a bien effectué le changement de phrase
 ![GET2](Images/Screenshot_Postman/get_general2.JPG)
+Méthode PATCH, path=welcome/18, change la lettre à la position 18 pour obtenir 3ESC au lieu d'3ESE
 ![PATCH](Images/Screenshot_Postman/patch.JPG)
+Méthode PUT, path=welcome/15, insère le mot 3AEI à la place d'3ESC
 ![PUT](Images/Screenshot_Postman/put.JPG)
+Méthode DELETE, path=welcome/15, supprime la lettre à la position 15 pour obtenir ESE au lieu de 3ESE
 ![DELETEX](Images/Screenshot_Postman/delete_x.JPG)
+Méthode DELETE, path=welcome, supprime la phrase entière
 ![DELETE](Images/Screenshot_Postman/delete_all.JPG)
+Méthode GET, path=welcome, vérifie qu'on a bien un vide après suppression
 ![GET_D](Images/Screenshot_Postman/get_delete.JPG)
 ### Erreur 404
 Redirection sur la page 'erreur' si ```@app.route('/')``` ou si ```index < taille(welcome)```, placez-vous dans ```@app.route('/api/welcome/')```
-![route_base](Images/Screenshot_Postman/route_base.JPG)
+![route_base](Images/Screenshot_Postman/routeBase.JPG)
 ![route_base](Images/Screenshot_Postman/index_trop_grand.JPG)
-
-
-
-
 
 # 4. Bus CAN 
 Nous n'avons pas traité la partie CAN. <br>
